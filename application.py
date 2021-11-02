@@ -41,11 +41,11 @@ db = SQL(os.getenv("DATABASE_URL"))
 
 
 @app.route("/")
-#@login_required
+@login_required
 def index():
     """Show index page"""
 
-    return render_template("index.html")
+    return render_template("index.html", username=session["username"])
 
 
 
@@ -76,6 +76,8 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        # Remember username
+        session["username"] = rows[0]["username"]
 
         # Redirect user to home page
         return redirect("/")
