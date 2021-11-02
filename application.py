@@ -44,8 +44,8 @@ db = SQL(os.getenv("DATABASE_URL"))
 @login_required
 def index():
     """Show index page"""
-
-    return render_template("index.html", username=session["username"])
+    username = session["username"]
+    return render_template("index.html", username=username)
 
 
 
