@@ -122,6 +122,7 @@ def logout():
     session.clear()
 
     # Redirect user to login form
+    flash('You were successfully logged in')
     return redirect("/")
 
 
@@ -157,6 +158,7 @@ def register():
         db.execute("INSERT INTO users (username, hash) VALUES (?, ?)",
                    request.form.get("username"),  generate_password_hash(request.form.get("password")))
 
+        flash('You were successfully registered')
         return redirect("/login")
 
     # User reached route via GET (as by clicking a link or via redirect)
