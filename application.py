@@ -80,6 +80,7 @@ def login():
         session["username"] = rows[0]["username"]
 
         # Redirect user to home page
+        flash('You were successfully logged in')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -122,7 +123,7 @@ def logout():
     session.clear()
 
     # Redirect user to login form
-    flash('You were successfully logged in')
+    flash('You were successfully logged out')
     return redirect("/")
 
 
