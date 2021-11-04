@@ -44,8 +44,8 @@ db = SQL(os.getenv("DATABASE_URL"))
 @login_required
 def index():
     """Show index page"""
-    username = session["username"]
-    return render_template("index.html", username=username)
+    first_name = session["first_name"]
+    return render_template("index.html", first_name=first_name)
 
 
 
@@ -77,7 +77,7 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
         # Remember username
-        session["username"] = rows[0]["username"]
+        session["first_name"] = rows[0]["first_name"]
 
         # Redirect user to home page
         flash('You were successfully logged in')
@@ -132,8 +132,12 @@ def register():
     """Register user"""
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
+        # Ensure first name was submitted
+        if not request.form.get("first_name"):
+            return apology("must provide first name", 403)
+
         # Ensure username was submitted
-        if not request.form.get("username"):
+        elif not request.form.get("username"):
             return apology("must provide username", 400)
 
         # See if this username already exists in the database
@@ -155,9 +159,10 @@ def register():
         elif request.form.get("password") != request.form.get("confirmation"):
             return apology("password and its confirmation do not match", 400)
 
-        # Insert username and hashed password into database
-        db.execute("INSERT INTO users (username, hash) VALUES (?, ?)",
-                   request.form.get("username"),  generate_password_hash(request.form.get("password")))
+        # Insert first name, username and hashed password into database
+        db.execute("INSERT INTO users (username, hash, first_name) VALUES (?, ?, ?)",
+                   request.form.get("username"),  generate_password_hash(request.form.get("password")),
+                   request.form.get("first_name"))
 
         flash('You were successfully registered')
         return redirect("/login")
