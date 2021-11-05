@@ -45,8 +45,8 @@ def index():
     """Show index page"""
     first_name = session["first_name"]
 
-    # children = get_children()
-    return render_template("index.html", first_name=first_name)
+    children = get_children()
+    return render_template("index.html", first_name=first_name, children=children)
 
 
 @app.route("/children", methods=["GET", "POST"])
@@ -197,28 +197,28 @@ def register():
         return render_template("register.html")
 
 
-# def get_children():
-#     rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session.get("user_id"))
+def get_children():
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session.get("user_id"))
 
-#     children = []
-#     for row in rows:
-#         baby_name = row["baby_name"]
-#         baby_birth = row["baby_birth"]
-#         baby_age = calculate_age(baby_birth)
-#         new_child = {
-#             "baby_name": baby_name,
-#             "baby_birth": baby_birth,
-#             "baby_age": baby_age
-#         }
-#         children.append(new_child)
+    children = []
+    for row in rows:
+        baby_name = row["baby_name"]
+        baby_birth = row["baby_birth"]
+        baby_age = calculate_age(baby_birth)
+        new_child = {
+            "baby_name": baby_name,
+            "baby_birth": baby_birth,
+            "baby_age": baby_age
+        }
+        children.append(new_child)
 
-#     return children
+    return children
 
 
-# # This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
-# def calculate_age(born):
-#     today = date.today()
-#     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+# This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     
 
 def errorhandler(e):
