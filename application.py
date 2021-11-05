@@ -40,45 +40,8 @@ Session(app)
 # Configure CS50 Library to use Heroku PostgreSQL database
 db = SQL(os.getenv("DATABASE_URL"))
 
-
-@app.route("/")
-@login_required
-def index():
-    """Show index page"""
-    first_name = session["first_name"]
-
-    children = get_children(session["user_id"])
-    return render_template("index.html", first_name=first_name, children=children)
-
-@app.route("/children", methods=["GET", "POST"])
-@login_required
-def children():
-    """Show children's page"""
-    user_id = session["user_id"]
-
-    if request.method == "POST":
-        # Child was added via the form
-        # Check if that person already has a child with this name
-        rows = db.execute("SELECT * FROM children WHERE parent_id = ?", user_id)
-        for row in rows:
-            if row["baby_name"] == request.form.get("baby_name"):
-                return apology("You already have a child with this name")
-        
-        # Add the child to the database
-        db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
-                   user_id, request.form.get("baby_name"), request.form.get("baby_birth"))
-
-        # Get children from database
-        children = get_children(user_id)
-
-        return render_template("children.html", children=children)
-    else:
-        # Get children from database
-        children = get_children(user_id)
-        return render_template("children.html", children=children)
-
-def get_children(user_id):
-    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", user_id)
+def get_children():
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
 
     children = []
     for row in rows:
@@ -93,6 +56,42 @@ def get_children(user_id):
         children.append(new_child)
 
     return children
+
+
+@app.route("/")
+@login_required
+def index():
+    """Show index page"""
+    first_name = session["first_name"]
+
+    children = get_children()
+    return render_template("index.html", first_name=first_name, children=children)
+
+@app.route("/children", methods=["GET", "POST"])
+@login_required
+def children():
+    """Show children's page"""
+    if request.method == "POST":
+        # Child was added via the form
+        # Check if that person already has a child with this name
+        rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+        for row in rows:
+            if row["baby_name"] == request.form.get("baby_name"):
+                return apology("You already have a child with this name")
+        
+        # Add the child to the database
+        db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
+                   session["user_id"], request.form.get("baby_name"), request.form.get("baby_birth"))
+
+        # Get children from database
+        children = get_children()
+
+        return render_template("children.html", children=children)
+    else:
+        # Get children from database
+        children = get_children()
+        return render_template("children.html", children=children)
+
 
 # This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
 def calculate_age(born):
@@ -214,18 +213,8 @@ def register():
                    request.form.get("username"),  generate_password_hash(request.form.get("password")),
                    request.form.get("first_name"))
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
-
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-        # Remember username
-        session["first_name"] = rows[0]["first_name"]
-        
-        # Get children from database
-        children = get_children(session["user_id"])
         flash('You were successfully registered')
-        return render_template("children.html", children=children)
+        return render_template("login.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
