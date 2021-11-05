@@ -213,7 +213,7 @@ def register():
         db.execute("INSERT INTO users (username, hash, first_name) VALUES (?, ?, ?)",
                    request.form.get("username"),  generate_password_hash(request.form.get("password")),
                    request.form.get("first_name"))
-                   
+
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
@@ -222,8 +222,10 @@ def register():
         # Remember username
         session["first_name"] = rows[0]["first_name"]
         
+        # Get children from database
+        children = get_children(session["user_id"])
         flash('You were successfully registered')
-        return redirect("/children")
+        return render_template("children.html", children=children)
 
     # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
