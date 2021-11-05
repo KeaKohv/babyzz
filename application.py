@@ -75,12 +75,6 @@ def children():
         children = get_children()
         return render_template("children.html", children=children)
 
-
-# This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
-def calculate_age(born):
-    today = date.today()
-    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -205,7 +199,7 @@ def register():
 
 
 def get_children():
-    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session.get("user_id"))
 
     children = []
     for row in rows:
@@ -220,6 +214,13 @@ def get_children():
         children.append(new_child)
 
     return children
+
+
+# This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+    
 
 def errorhandler(e):
     """Handle error"""
