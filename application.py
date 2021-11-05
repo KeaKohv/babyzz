@@ -65,8 +65,8 @@ def children():
                 return apology("You already have a child with this name")
         
         # Add the child to the database
-            db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
-                user_id, request.form.get("baby_name"), request.form.get("baby_birth"))
+        db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
+                   user_id, request.form.get("baby_name"), request.form.get("baby_birth"))
 
         # Get children from database
         children = get_children(user_id)
@@ -213,9 +213,17 @@ def register():
         db.execute("INSERT INTO users (username, hash, first_name) VALUES (?, ?, ?)",
                    request.form.get("username"),  generate_password_hash(request.form.get("password")),
                    request.form.get("first_name"))
+                   
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
+        # Remember which user has logged in
+        session["user_id"] = rows[0]["id"]
+        # Remember username
+        session["first_name"] = rows[0]["first_name"]
+        
         flash('You were successfully registered')
-        return redirect("/login")
+        return redirect("/children")
 
     # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
