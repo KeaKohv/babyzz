@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Children
+{% endblock %}
+
+{% block main %}
+    <h3>Your children </h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Baby name</th>
+                <th>Date of birth</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through the database entries to display them in this table -->
+            {% for child in children %}
+            <tr>
+                <td>{{item["baby_name"]}}</td>
+                <td>{{item["baby_birth"]}}</td>
+                <td>{{item["baby_age"]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Add a child</h2>
+    <form action="/children" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="baby_name" placeholder="Baby's first name" type="text">
+        </div>
+        <div class="form-group">
+            <label>
+                Enter your baby's date of birth:
+                <input type="date" name="baby_birth">
+              </label>
+        </div>
+        <button class="btn btn-primary" type="submit">Add a child</button>
+    </form>
+{% endblock %}

@@ -6,4 +6,29 @@
 
 {% block main %}
     <h2>Hello, {{first_name}}!</h2>
+
+    <h3>Your babies sleep needs</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Baby name</th>
+                <th>Age</th>
+                <th>Stage</th>
+                <th>Total sleep over 24h</th>
+                <th>Nap pattern</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through the database entries to display them in this table -->
+            {% for child in children %}
+            <tr>
+                <td>{{item["baby_name"]}}</td>
+                <td>{{item["baby_age"]}}</td>
+                <!-- <td>{{item["stage"]}}</td>
+                <td>{{item["total_sleep"] | usd}}</td>
+                <td>{{item["nap_pattern"] | usd}}</td> -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

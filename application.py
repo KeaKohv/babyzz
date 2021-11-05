@@ -8,6 +8,7 @@ from flask_session import Session
 from werkzeug.exceptions import (HTTPException, InternalServerError,
                                  default_exceptions)
 from werkzeug.security import check_password_hash, generate_password_hash
+from datetime import date
 
 from helpers import apology, login_required, usd
 
@@ -45,9 +46,58 @@ db = SQL(os.getenv("DATABASE_URL"))
 def index():
     """Show index page"""
     first_name = session["first_name"]
-    return render_template("index.html", first_name=first_name)
 
+    children = get_children(session["user_id"])
+    return render_template("index.html", first_name=first_name, children=children)
 
+@app.route("/children", methods=["GET", "POST"])
+@login_required
+def children():
+    """Show children's page"""
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        # Child was added via the form
+        # Check if that person already has a child with this name
+        rows = db.execute("SELECT * FROM children WHERE parent_id = ?", user_id)
+        for row in rows:
+            if row["baby_name"] == request.form.get("baby_name"):
+                return apology("You already have a child with this name")
+        
+        # Add the child to the database
+            db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
+                user_id, request.form.get("baby_name"), request.form.get("baby_birth"))
+
+        # Get children from database
+        children = get_children(user_id)
+
+        return render_template("children.html", children=children)
+    else:
+        # Get children from database
+        children = get_children(user_id)
+        return render_template("children.html", children=children)
+
+def get_children(user_id):
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", user_id)
+
+    children = []
+    for row in rows:
+        baby_name = row["baby_name"]
+        baby_birth = row["baby_birth"]
+        baby_age = calculate_age(baby_birth)
+        new_child = {
+            "baby_name": baby_name,
+            "baby_birth": baby_birth,
+            "baby_age": baby_age
+        }
+        children.append(new_child)
+
+    return children
+
+# This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
