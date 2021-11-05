@@ -198,7 +198,7 @@ def register():
 
 
 def get_children():
-    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session.get("user_id"))
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
 
     children = []
     for row in rows:
