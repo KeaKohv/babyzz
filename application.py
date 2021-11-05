@@ -27,7 +27,6 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-
 # Custom filter
 app.jinja_env.filters["usd"] = usd
 
@@ -40,23 +39,6 @@ Session(app)
 # Configure CS50 Library to use Heroku PostgreSQL database
 db = SQL(os.getenv("DATABASE_URL"))
 
-def get_children():
-    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
-
-    children = []
-    for row in rows:
-        baby_name = row["baby_name"]
-        baby_birth = row["baby_birth"]
-        baby_age = calculate_age(baby_birth)
-        new_child = {
-            "baby_name": baby_name,
-            "baby_birth": baby_birth,
-            "baby_age": baby_age
-        }
-        children.append(new_child)
-
-    return children
-
 
 @app.route("/")
 @login_required
@@ -66,6 +48,7 @@ def index():
 
     children = get_children()
     return render_template("index.html", first_name=first_name, children=children)
+
 
 @app.route("/children", methods=["GET", "POST"])
 @login_required
@@ -220,6 +203,23 @@ def register():
     if request.method == "GET":
         return render_template("register.html")
 
+
+def get_children():
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+
+    children = []
+    for row in rows:
+        baby_name = row["baby_name"]
+        baby_birth = row["baby_birth"]
+        baby_age = calculate_age(baby_birth)
+        new_child = {
+            "baby_name": baby_name,
+            "baby_birth": baby_birth,
+            "baby_age": baby_age
+        }
+        children.append(new_child)
+
+    return children
 
 def errorhandler(e):
     """Handle error"""
