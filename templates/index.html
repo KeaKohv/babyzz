@@ -7,15 +7,12 @@
 {% block main %}
     <h2>Hello, {{first_name}}!</h2>
 
-    <h3>Your babies sleep needs</h3>
+    <h3>Your childrens' sleep needs </h3>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Baby name</th>
-                <th>Age</th>
-                <th>Stage</th>
-                <th>Total sleep over 24h</th>
-                <th>Nap pattern</th>
+                <th>Date of birth</th>
             </tr>
         </thead>
         <tbody>
@@ -23,14 +20,7 @@
             {% for child in children %}
             <tr>
                 <td>{{child["baby_name"]}}</td>
-                <td>ToDO</td>
-                <td>ToDO</td>
-                <td>ToDO</td>
-                <td>ToDO</td>
-                <!-- <td>{{child["baby_age"]}}</td> -->
-                <!-- <td>{{child["stage"]}}</td>
-                <td>{{child["total_sleep"] | usd}}</td>
-                <td>{{child["nap_pattern"] | usd}}</td> -->
+                <td>{{child["baby_birth"]}}</td>
             </tr>
             {% endfor %}
         </tbody>
