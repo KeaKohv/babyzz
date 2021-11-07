@@ -64,11 +64,14 @@ def children():
         # Add the child to the database
         db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
                    session["user_id"], request.form.get("baby_name"), request.form.get("baby_birth"))
+        
+        flash("Your child was added")
 
         # Get children from database
         # children = get_children()
+        children = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
 
-        return render_template("children.html")
+        return render_template("children.html", children=children)
     else:
         # Get children from database
         # children = get_children()
