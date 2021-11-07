@@ -221,11 +221,12 @@ def children_sleep_needs(user_id):
 # This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
 def calculate_age(born):
     today = date.today()
-    lived_in_days = today - born
-    years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-    months = int((lived_in_days/365)*12) - (int(years)*12)
+    lived = today - born
+    lived_in_days = lived.days
+    # years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+    # months = int((lived_in_days/365)*12) - (int(years)*12)
 
-    return months
+    return lived_in_days
     
     # str_years = "years"
     # str_months = "months"
