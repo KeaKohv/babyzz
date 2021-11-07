@@ -225,22 +225,21 @@ def calculate_age(born):
     # lived_in_days = lived.days
     years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     months = today.month - born.month - ((today.day) < (born.day))
-    # months = int((lived_in_days/365)*12) - (int(years)*12)
-
-    return f"{years} years {months} months"
+    days = today.day - born.day
     
-    # str_years = "years"
-    # str_months = "months"
-    # if years == 1:
-    #     str_years = "year"
-    # if months == 0 or months == 1:
-    #     str_months = "month"
+    str_years = "years"
+    str_months = "months"
+    if years == 1:
+        str_years = "year"
+    if months == 1:
+        str_months = "month"
 
-    # if years > 0:
-    #     if years == 1:
-    #         return f"{years} {str_years} and {months} {str_months}"
-    # else:
-    #     return f"{months} {str_months}"
+    if years > 0:
+        return f"{years} {str_years} and {months} {str_months}"
+    elif months == 0:
+        return f"{days} days"
+    else:
+        return f"{months} {str_months}"
     
 
 def errorhandler(e):
