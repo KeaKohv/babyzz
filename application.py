@@ -74,8 +74,8 @@ def children():
         return render_template("children.html", children=children)
     else:
         # Get children from database
-        # children = get_children()
-        return render_template("children.html")
+        children = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+        return render_template("children.html", children=children)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
