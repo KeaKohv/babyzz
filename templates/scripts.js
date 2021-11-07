@@ -1,0 +1,1 @@
+datePickerId.max = new Date().toLocaleDateString('en-ca')

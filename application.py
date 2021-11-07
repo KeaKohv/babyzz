@@ -61,6 +61,10 @@ def children():
             if row["baby_name"] == request.form.get("baby_name"):
                 return apology("You already have a child with this name")
         
+        today = date.today()
+        if request.form.get("baby_birth") > today:
+            return apology("Pick a baby birth date in the past")
+        
         # Add the child to the database
         db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
                    session["user_id"], request.form.get("baby_name"), request.form.get("baby_birth"))
@@ -75,6 +79,7 @@ def children():
     else:
         # Get children from database
         children = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+
         return render_template("children.html", children=children)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -221,8 +226,6 @@ def children_sleep_needs(user_id):
 # This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
 def calculate_age(born):
     today = date.today()
-    # lived = today - born
-    # lived_in_days = lived.days
     years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     months = today.month - born.month - ((today.day) < (born.day))
     days = today.day - born.day
