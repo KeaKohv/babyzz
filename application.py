@@ -45,7 +45,7 @@ def index():
     """Show index page"""
     first_name = session["first_name"]
 
-    children = get_children(session["user_id"])
+    children = children_sleep_needs(session["user_id"])
     return render_template("index.html", first_name=first_name, children=children)
 
 
@@ -200,18 +200,18 @@ def register():
         return render_template("register.html")
 
 
-def get_children(user_id):
+def children_sleep_needs(user_id):
     rows = db.execute("SELECT * FROM children WHERE parent_id = ?", user_id)
 
     children = []
     for row in rows:
         baby_name = row["baby_name"]
         baby_birth = row["baby_birth"]
-        #baby_age = calculate_age(baby_birth)
+        baby_age = calculate_age(baby_birth)
         new_child = {
             "baby_name": baby_name,
-            "baby_birth": baby_birth
-            # "baby_age": baby_age
+            "baby_birth": baby_birth,
+            "baby_age": baby_age
         }
         children.append(new_child)
 
@@ -219,9 +219,9 @@ def get_children(user_id):
 
 
 # This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
-# def calculate_age(born):
-#     today = date.today()
-#     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     
 
 def errorhandler(e):
