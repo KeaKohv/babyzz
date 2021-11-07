@@ -223,7 +223,7 @@ def calculate_age(born):
     today = date.today()
     lived_in_days = today - born
     years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-    months = int((lived_in_days/365)*12) - (years*12)
+    months = int((lived_in_days/365)*12) - (int(years)*12)
 
     return months
     
