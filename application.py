@@ -53,18 +53,31 @@ def index():
 @login_required
 def children():
     """Show children's page"""
+
+    # Child was added via the form
     if request.method == "POST":
-        # Child was added via the form
+        
+        # Check if name was given
+        if not request.form.get("baby_name"):
+            return apology("must provide child's name", 403)
+
+        # Check if name contains only strings
+        if not all(x.isalpha() or x.isspace() for x in request.form.get("baby_birth")):
+            return apology("Child's name can only contain letters", 403)
+
+        # Check if date was given
+        if not request.form.get("baby_birth"):
+            return apology("must provide child's date of birth", 403)
+
+        # Capitalize the name
+        baby_name = request.form.get("baby_name").capitalize()
+
         # Check if that person already has a child with this name
         rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
-        baby_name = request.form.get("baby_name").capitalize()
+        
         for row in rows:
             if row["baby_name"] == baby_name:
                 return apology("You already have a child with this name")
-        
-        # today = date.today()
-        # if request.form.get("baby_birth") > today:
-        #     return apology("Pick a baby birth date in the past")
         
         # Add the child to the database
         db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
