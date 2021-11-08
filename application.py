@@ -57,13 +57,14 @@ def children():
         # Child was added via the form
         # Check if that person already has a child with this name
         rows = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+        baby_name = request.form.get("baby_name").capitalize()
         for row in rows:
-            if row["baby_name"] == request.form.get("baby_name"):
+            if row["baby_name"] == baby_name:
                 return apology("You already have a child with this name")
         
-        today = date.today()
-        if request.form.get("baby_birth") > today:
-            return apology("Pick a baby birth date in the past")
+        # today = date.today()
+        # if request.form.get("baby_birth") > today:
+        #     return apology("Pick a baby birth date in the past")
         
         # Add the child to the database
         db.execute("INSERT INTO children (parent_id, baby_name, baby_birth) VALUES (?, ?, ?)",
