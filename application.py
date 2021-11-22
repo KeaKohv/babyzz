@@ -227,17 +227,30 @@ def children_sleep_needs(user_id):
         baby_name = row["baby_name"]
         baby_birth = row["baby_birth"]
         baby_age = calculate_age(baby_birth)
+        baby_age_in_months = calculate_age_in_months(baby_birth)
+        total = None
+        naps = None
         new_child = {
             "baby_name": baby_name,
             "baby_birth": baby_birth,
-            "baby_age": baby_age
+            "baby_age": baby_age,
+            "age_in_months": baby_age_in_months,
+            "total": total,
+            "naps": naps
         }
         children.append(new_child)
+
+    for child in children:
+        months = child["age_in_months"]
+        sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min < :months AND age_max > :months",
+                                  months=months)
+        child["total"] = sleep_needs["total"]
+        child["naps"] = sleep_needs["total"]
 
     return children
 
 
-# This function is based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
+# This function is partly based on the solution given here: https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
 def calculate_age(born):
     today = date.today()
     years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
@@ -257,6 +270,16 @@ def calculate_age(born):
         return f"{days} days"
     else:
         return f"{months} {str_months}"
+
+# This function returns age in months
+def calculate_age_in_months(born):
+    today = date.today()
+    years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+    months = today.month - born.month - ((today.day) < (born.day))
+
+    months_total = years*12 + months
+    
+    return months_total
     
 
 def errorhandler(e):
