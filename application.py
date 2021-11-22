@@ -38,6 +38,9 @@ Session(app)
 # Configure CS50 Library to use Heroku PostgreSQL database
 db = SQL(os.getenv("DATABASE_URL"))
 
+#For local database
+#db = SQL("postgresql://postgres:Kallimaania112@localhost:5432/BabyZz")
+
 
 @app.route("/")
 @login_required
