@@ -242,10 +242,10 @@ def children_sleep_needs(user_id):
 
     for child in children:
         months = child["age_in_months"]
-        sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min < ? AND age_max > ?",
+        sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min <= ? AND age_max >= ?",
                                   months, months)
         child["total"] = sleep_needs["total"]
-        child["naps"] = sleep_needs["total"]
+        child["naps"] = sleep_needs["naps"]
 
     return children
 
