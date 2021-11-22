@@ -231,8 +231,8 @@ def children_sleep_needs(user_id):
         baby_birth = row["baby_birth"]
         baby_age = calculate_age(baby_birth)
         baby_age_in_months = calculate_age_in_months(baby_birth)
-        total = None
-        naps = None
+        total = "You should have a lot of sleep"
+        naps = "Many naps"
         new_child = {
             "baby_name": baby_name,
             "baby_birth": baby_birth,
@@ -243,12 +243,12 @@ def children_sleep_needs(user_id):
         }
         children.append(new_child)
 
-    for child in children:
-        months = child["age_in_months"]
-        sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min <= :months AND age_max >= :months",
-                                  months=months)
-        child["total"] = sleep_needs["total"]
-        child["naps"] = sleep_needs["naps"]
+    # for child in children:
+    #     months = child["age_in_months"]
+    #     sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min <= :months AND age_max >= :months",
+    #                               months=months)
+    #     child["total"] = sleep_needs["total"]
+    #     child["naps"] = sleep_needs["naps"]
 
     return children
 
@@ -280,8 +280,7 @@ def calculate_age_in_months(born):
     years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     months = today.month - born.month - ((today.day) < (born.day))
 
-    #months_total = years*12 + months
-    months_total = 12
+    months_total = int(years*12) + int(months)
     
     return months_total
     
