@@ -242,8 +242,8 @@ def children_sleep_needs(user_id):
 
     for child in children:
         months = child["age_in_months"]
-        sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min <= ? AND age_max >= ?",
-                                  months, months)
+        sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min <= :months AND age_max >= :months",
+                                  months=months)
         child["total"] = sleep_needs["total"]
         child["naps"] = sleep_needs["naps"]
 
@@ -277,7 +277,8 @@ def calculate_age_in_months(born):
     years = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     months = today.month - born.month - ((today.day) < (born.day))
 
-    months_total = years*12 + months
+    #months_total = years*12 + months
+    months_total = 12
     
     return months_total
     
