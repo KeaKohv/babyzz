@@ -245,7 +245,7 @@ def children_sleep_needs(user_id):
 
     for child in children:
         months = int(child["age_in_months"])
-        sleep_needs = db.excecute("SELECT * FROM sleep_needs WHERE age_min <= ? AND age_max >= ?",
+        sleep_needs = db.execute("SELECT * FROM sleep_needs WHERE age_min <= ? AND age_max >= ?",
                                   months, months)
        
         if len(sleep_needs) == 1:
