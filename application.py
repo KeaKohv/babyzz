@@ -231,8 +231,8 @@ def children_sleep_needs(user_id):
         baby_birth = row["baby_birth"]
         baby_age = calculate_age(baby_birth)
         baby_age_in_months = calculate_age_in_months(baby_birth)
-        total = None
-        naps = None
+        total = "ZZZ"
+        naps = "zzz"
         if baby_age_in_months <= 167:
             new_child = {
                 "baby_name": baby_name,
@@ -244,17 +244,17 @@ def children_sleep_needs(user_id):
             }
             children.append(new_child)
 
-    for child in children:
-        months = child["age_in_months"]
-        sleep_needs = db.execute("SELECT * FROM sleep_needs WHERE age_min <= ? AND age_max >= ?",
-                                  months, months)
+    # for child in children:
+    #     months = child["age_in_months"]
+    #     sleep_needs = db.execute("SELECT * FROM sleep_needs WHERE age_min <= ? AND age_max >= ?",
+    #                               months, months)
        
-        if len(sleep_needs) == 1:
-            child["total"] = sleep_needs["total"]
-            child["naps"] = sleep_needs["naps"]
-        else:
-            child["total"] = "N/i"
-            child["naps"] = "N/i"
+    #     if len(sleep_needs) == 1:
+    #         child["total"] = sleep_needs["total"]
+    #         child["naps"] = sleep_needs["naps"]
+    #     else:
+    #         child["total"] = "N/i"
+    #         child["naps"] = "N/i"
 
     return children
 
