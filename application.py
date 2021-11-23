@@ -231,17 +231,18 @@ def children_sleep_needs(user_id):
         baby_birth = row["baby_birth"]
         baby_age = calculate_age(baby_birth)
         baby_age_in_months = calculate_age_in_months(baby_birth)
-        total = "You should have a lot of sleep"
-        naps = "Many naps"
-        new_child = {
-            "baby_name": baby_name,
-            "baby_birth": baby_birth,
-            "baby_age": baby_age,
-            "age_in_months": baby_age_in_months,
-            "total": total,
-            "naps": naps
-        }
-        children.append(new_child)
+        total = None
+        naps = None
+        if baby_age_in_months <= 167:
+            new_child = {
+                "baby_name": baby_name,
+                "baby_birth": baby_birth,
+                "baby_age": baby_age,
+                "age_in_months": baby_age_in_months,
+                "total": total,
+                "naps": naps
+            }
+            children.append(new_child)
 
     for child in children:
         months = child["age_in_months"]
