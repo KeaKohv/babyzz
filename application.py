@@ -251,7 +251,7 @@ def children_sleep_needs(user_id):
        
         if len(sleep_needs) == 1:
             child["total"] = "N/ii"
-            child["naps"] = "N/ii"
+            child["naps"] = "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONG"
         else:
             child["total"] = "N/i"
             child["naps"] = "N/i"
