@@ -294,7 +294,7 @@ def children_waketime(user_id):
        
         if len(waketime) == 1:
             for row in waketime:
-                child["waketime"] = row["waketime"]
+                child["waketime"] = row["length"]
         else:
             child["waketime"] = "N/i"
 
