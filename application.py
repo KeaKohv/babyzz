@@ -55,10 +55,8 @@ def index():
 @login_required
 def waketimes():
     """Show waketime page"""
-    first_name = session["first_name"]
-
     children = children_waketime(session["user_id"])
-    return render_template("waketimes.html", first_name=first_name, children=children)
+    return render_template("waketimes.html", children=children)
 
 
 
