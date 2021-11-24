@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Waketimes
+{% endblock %}
+
+{% block main %}
+    <h2>Hello, {{first_name}}!</h2>
+
+    <h3>Your children's suggested waketimes </h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Child's name</th>
+                <th>Child's age</th>
+                <th>Waketime Lenght</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through the database entries to display them in this table -->
+            {% for child in children %}
+            <tr>
+                <td>{{child["baby_name"]}}</td>
+                <td>{{child["baby_age"]}}</td>
+                <td>{{child["waketime"]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>The table displays data on children up to 4 years of age.</p>
+    <h3>Please note:</h3>
+    <ul>
+        <li>Remember, these are just suggestions. Babies are different and can fall below or above these ranges.</li>
+        <li>Waketimes start off on the shorter end and increase a bit as the day progresses.</li>
+        <li>Waketimes mean total wake time (starting when baby awakes).</li>
+      </ul>
+    <p>Source of sleep advice: <a href="http://www.mybabysleepguide.com/2009/02/wake-time.html" target="_blank" rel="noreferrer noopener">Rachel Rowell</a></p>
+{% endblock %}

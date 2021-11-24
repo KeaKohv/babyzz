@@ -51,6 +51,16 @@ def index():
     children = children_sleep_needs(session["user_id"])
     return render_template("index.html", first_name=first_name, children=children)
 
+@app.route("/waketime")
+@login_required
+def index():
+    """Show waketime page"""
+    first_name = session["first_name"]
+
+    children = children_waketime(session["user_id"])
+    return render_template("index.html", first_name=first_name, children=children)
+
+
 
 @app.route("/children", methods=["GET", "POST"])
 @login_required
@@ -256,6 +266,39 @@ def children_sleep_needs(user_id):
         else:
             child["total"] = "N/i"
             child["naps"] = "N/i"
+
+    return children
+
+def children_waketime(user_id):
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", user_id)
+
+    children = []
+    for row in rows:
+        baby_name = row["baby_name"]
+        baby_birth = row["baby_birth"]
+        baby_age = calculate_age(baby_birth)
+        baby_age_in_months = calculate_age_in_months(baby_birth)
+        waketime = "ZZZ"
+        if baby_age_in_months <= 48:
+            new_child = {
+                "baby_name": baby_name,
+                "baby_birth": baby_birth,
+                "baby_age": baby_age,
+                "age_in_months": baby_age_in_months,
+                "waketime": waketime
+            }
+            children.append(new_child)
+
+    for child in children:
+        months = child["age_in_months"]
+        waketime = db.execute("SELECT * FROM waketime WHERE age_min <= ? AND age_max >= ?",
+                                  months, months)
+       
+        if len(waketime) == 1:
+            for row in waketime:
+                child["waketime"] = row["waketime"]
+        else:
+            child["waketime"] = "N/i"
 
     return children
 
