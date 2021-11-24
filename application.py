@@ -51,7 +51,7 @@ def index():
     children = children_sleep_needs(session["user_id"])
     return render_template("index.html", first_name=first_name, children=children)
 
-@app.route("/waketime")
+@app.route("/waketimes")
 @login_required
 def waketimes():
     """Show waketime page"""
