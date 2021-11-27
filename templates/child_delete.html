@@ -10,7 +10,7 @@
         <div class="form-group">
             <select name="baby_name" id="baby_name">
                 {% for child in children %}
-                <option value="baby_name">{{child["baby_name"]}}</option>
+                <option name="baby_name">{{child["baby_name"]}}</option>
                 {% endfor %}
             </select>
         </div>
