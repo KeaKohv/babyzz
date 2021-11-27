@@ -302,7 +302,8 @@ def children_waketime(user_id):
         if len(waketime) == 1:
             for row in waketime:
                 child["waketime"] = row["length"]
-                child["schedule"] = row["schedule"]
+                if not row["scheduele"] == None:
+                    child["schedule"] = row["schedule"]
 
     return children
 
