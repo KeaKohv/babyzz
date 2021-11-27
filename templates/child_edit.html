@@ -10,17 +10,17 @@
         <div class="form-group">
             <select name="baby_name" id="baby_name">
                 {% for child in children %}
-                <option value="{{child["baby_name"]}}">{{child["baby_name"]}}</option>
+                <option value="baby_name">{{child["baby_name"]}}</option>
                 {% endfor %}
               </select>
         </div>
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="baby_name_new" placeholder="Baby's first name" value = "{{child["baby_name"]}}" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="baby_name_new" placeholder="Baby's first name" type="text">
         </div>
         <div class="form-group">
             <label>
                 Enter your child's date of birth:
-                <input type="date" name="baby_birth" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]" value = "{{child["baby_birth"]}}">
+                <input type="date" name="baby_birth" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]">
               </label>
         </div>
         <button class="btn btn-primary" type="submit">Submit changes</button>
