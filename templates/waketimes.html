@@ -12,6 +12,7 @@
                 <th>Child's name</th>
                 <th>Child's age</th>
                 <th>Waketime Length</th>
+                <th>Waketime Schedule</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
                 <td>{{child["baby_name"]}}</td>
                 <td>{{child["baby_age"]}}</td>
                 <td>{{child["waketime"]}}</td>
+                <td>{{child["schedule"]}}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -34,6 +36,8 @@
         <li>Waketimes start off on the shorter end and increase a bit as the day progresses.</li>
         <li>Waketimes mean total wake time (starting when baby awakes).</li>
         <li>If your baby was born more than 3 weeks early, use baby’s adjusted age when following wake times.</li>
-      </ul>
+        <li>Sample waketime schedules are given for children from 3 to 12 months.</li>
+        <li>Slashes in sample schedules indicate naps. Waketimes are given in hours. So 0.25 is 15 minutes.</li>
+    </ul>
     
 {% endblock %}

@@ -281,14 +281,16 @@ def children_waketime(user_id):
         baby_birth = row["baby_birth"]
         baby_age = calculate_age(baby_birth)
         baby_age_in_months = calculate_age_in_months(baby_birth)
-        waketime = "ZZZ"
+        waketime = "Not available"
+        schedule = "Not available"
         if baby_age_in_months <= 48:
             new_child = {
                 "baby_name": baby_name,
                 "baby_birth": baby_birth,
                 "baby_age": baby_age,
                 "age_in_months": baby_age_in_months,
-                "waketime": waketime
+                "waketime": waketime,
+                "schedule": schedule
             }
             children.append(new_child)
 
@@ -300,8 +302,7 @@ def children_waketime(user_id):
         if len(waketime) == 1:
             for row in waketime:
                 child["waketime"] = row["length"]
-        else:
-            child["waketime"] = "N/i"
+                child["schedule"] = row["schedule"]
 
     return children
 
@@ -315,15 +316,15 @@ def children_averages(user_id):
         baby_birth = row["baby_birth"]
         baby_age = calculate_age(baby_birth)
         baby_age_in_months = calculate_age_in_months(baby_birth)
-        waketime = "ZZZ"
-        total_sleep = "ZZZ"
-        total_night = "ZZZ"
-        total_day = "ZZZ"
-        nr_naps = "ZZZ"
-        naps_advice = "ZZZ"
-        bedtime = "ZZZ"
-        night_sleep_pattern = "ZZZ"
-        night_feeds = "ZZZ"
+        waketime = "Not available"
+        total_sleep = "Not available"
+        total_night = "Not available"
+        total_day = "Not available"
+        nr_naps = "Not available"
+        naps_advice = "Not available"
+        bedtime = "Not available"
+        night_sleep_pattern = "Not available"
+        night_feeds = "Not available"
         if baby_age_in_months <= 48:
             new_child = {
                 "baby_name": baby_name,
