@@ -58,7 +58,12 @@ def waketimes():
     children = children_waketime(session["user_id"])
     return render_template("waketimes.html", children=children)
 
-
+@app.route("/averages")
+@login_required
+def averages():
+    """Show averages page"""
+    children = children_averages(session["user_id"])
+    return render_template("averages.html", children=children)
 
 @app.route("/children", methods=["GET", "POST"])
 @login_required
@@ -297,6 +302,61 @@ def children_waketime(user_id):
                 child["waketime"] = row["length"]
         else:
             child["waketime"] = "N/i"
+
+    return children
+
+# Function for averages.html
+def children_averages(user_id):
+    rows = db.execute("SELECT * FROM children WHERE parent_id = ?", user_id)
+
+    children = []
+    for row in rows:
+        baby_name = row["baby_name"]
+        baby_birth = row["baby_birth"]
+        baby_age = calculate_age(baby_birth)
+        baby_age_in_months = calculate_age_in_months(baby_birth)
+        waketime = "ZZZ"
+        total_sleep = "ZZZ"
+        total_night = "ZZZ"
+        total_day = "ZZZ"
+        nr_naps = "ZZZ"
+        naps_advice = "ZZZ"
+        bedtime = "ZZZ"
+        night_sleep_pattern = "ZZZ"
+        night_feeds = "ZZZ"
+        if baby_age_in_months <= 48:
+            new_child = {
+                "baby_name": baby_name,
+                "baby_birth": baby_birth,
+                "baby_age": baby_age,
+                "age_in_months": baby_age_in_months,
+                "waketime": waketime,
+                "total_sleep": total_sleep,
+                "total_night": total_night,
+                "total_day": total_day,
+                "nr_naps": nr_naps,
+                "naps_advice": naps_advice,
+                "bedtime": bedtime,
+                "night_sleep_pattern": night_sleep_pattern,
+                "night_feeds": night_feeds
+            }
+            children.append(new_child)
+
+    for child in children:
+        months = child["age_in_months"]
+        averages = db.execute("SELECT * FROM averages WHERE age_min <= ? AND age_max >= ?",
+                                  months, months)
+       
+        if len(averages) == 1:
+            for row in averages:
+                child["waketime"] = row["waketime"]
+                child["total_sleep"] = row["total_sleep"]
+                child["total_day"] = row["total_day"]
+                child["nr_naps"] = row["nr_naps"]
+                child["naps_advice"] = row["naps_advice"]
+                child["bedtime"] = row["bedtime"]
+                child["night_sleep_pattern"] = row["night_sleep_pattern"]
+                child["night_feeds"] = row["night_feeds"]
 
     return children
 
