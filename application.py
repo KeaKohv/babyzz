@@ -351,6 +351,7 @@ def children_averages(user_id):
             for row in averages:
                 child["waketime"] = row["waketime"]
                 child["total_sleep"] = row["total_sleep"]
+                child["total_night"] = row["total_night"]
                 child["total_day"] = row["total_day"]
                 child["nr_naps"] = row["nr_naps"]
                 child["naps_advice"] = row["naps_advice"]
