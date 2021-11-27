@@ -13,6 +13,7 @@
                 <option value="baby_name" onkeyup="getName()">{{child["baby_name"]}}</option>
                 {% endfor %}
             </select>
+        <p></p>
         </div>
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" placeholder = "Child's name" name="baby_name_new" type="text">
@@ -28,8 +29,8 @@
 
     <script>
         function getName() {
-          var x = document.getElementById("baby_name").value;
-          document.getElementById("baby_name_new").value = x;
+          var x = document.getElementById("baby_name").innerHTML;
+          document.getElementById("baby_name_new").setAttribute('value', x);
         }
         </script>
 
