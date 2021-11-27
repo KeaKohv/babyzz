@@ -112,6 +112,45 @@ def children():
 
         return render_template("children.html", children=children)
 
+@app.route("/child_edit", methods=["GET", "POST"])
+@login_required
+def child_edit():
+    """Show children's data editing page"""
+
+    # Child was added via the form
+    if request.method == "POST":
+        
+        # Check if name was given
+        if not request.form.get("baby_name_new"):
+            return apology("must provide child's name", 403)
+
+        # Check if name contains only strings
+        if not all(x.isalpha() or x.isspace() for x in request.form.get("baby_birth")):
+            return apology("Child's name can only contain letters", 403)
+
+        # Check if date was given
+        if not request.form.get("baby_birth"):
+            return apology("must provide child's date of birth", 403)
+
+        # Capitalize the name
+        baby_name_new = request.form.get("baby_name_new").capitalize()
+
+        # Select that child from db
+        rows = db.execute("SELECT * FROM children WHERE parent_id = ? AND baby_name = ?", session["user_id"], request.form.get("baby_name"))
+        
+        # Edit the child's data
+        db.execute("UPDATE children SET baby_name = ?, baby_birth =  ? WHERE parent_id = ? AND baby_name = ?",
+                   baby_name_new, request.form.get("baby_birth"), session["user_id"], request.form.get("baby_name"))
+        
+        flash("Your child's data was changed")
+
+        return redirect("/children")
+    else:
+        # Get children from database
+        children = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+
+        return render_template("child_edit.html", children=children)
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
