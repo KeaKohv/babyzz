@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete child's data
+{% endblock %}
+
+{% block main %}
+    <h2>Delete a child from database</h2>
+    <form action="/child_delete" method="post">
+        <div class="form-group">
+            <select name="baby_name" id="baby_name">
+                {% for child in children %}
+                <option value="baby_name">{{child["baby_name"]}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Delete this child's data</button>
+    </form>
+{% endblock %}

@@ -38,10 +38,6 @@ Session(app)
 # Configure CS50 Library to use Heroku PostgreSQL database
 db = SQL(os.getenv("DATABASE_URL"))
 
-#For local database
-#db = SQL("postgresql://postgres:Kallimaania112@localhost:5432/BabyZz")
-
-
 @app.route("/")
 @login_required
 def index():
@@ -115,6 +111,7 @@ def children():
 @app.route("/child_edit", methods=["GET", "POST"])
 @login_required
 def child_edit():
+    
     """Show children's data editing page"""
 
     # Child was added via the form
@@ -147,6 +144,36 @@ def child_edit():
         child = db.execute("SELECT * FROM children WHERE parent_id = ? AND baby_name = ?", session["user_id"], request.form.get("baby_name"))
         
         return render_template("child_edit.html", child=child)
+
+
+@app.route("/child_delete", methods=["GET", "POST"])
+@login_required
+def child_delete():
+
+    # Child's data was deleted via the form
+    if request.method == "POST":
+        
+        # Check if name was given
+        if not request.form.get("baby_name"):
+            return apology("must provide child's name", 403)
+
+        # Check if that person already has a child with this name
+        rows = db.execute("SELECT * FROM children WHERE parent_id = ? AND baby_name = ?", session["user_id"], request.form.get("baby_name"))
+        
+        if len(rows) != 1:
+            return apology("No child under this name", 403)
+        
+        # Delete the child from the database
+        db.execute("DELETE FROM children WHERE parent_id = ? AND baby_name = ?", session["user_id"], request.form.get("baby_name"))
+        
+        flash("Your child was deleted from the database")
+
+        return redirect("/children")
+    else:
+        # Get children from database
+        children = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
+
+        return render_template("child_delete.html", children=children)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
