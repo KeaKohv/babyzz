@@ -10,7 +10,7 @@
         <div class="form-group"></div>
             <select name="baby_name" id="baby_name">
                 {% for child in children %}
-                <option value="baby_name" onkeyup="getName()">{{child["baby_name"]}}</option>
+                <option onkeyup="getName()">{{child["baby_name"]}}</option>
                 {% endfor %}
             </select>
         <p></p>
@@ -29,7 +29,7 @@
 
     <script>
         function getName() {
-          var x = document.getElementById("baby_name").innerHTML;
+          var x = document.getElementById("baby_name").value;
           document.getElementById("baby_name_new").setAttribute('value', x);
         }
         </script>
