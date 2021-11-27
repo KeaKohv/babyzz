@@ -134,9 +134,6 @@ def child_edit():
 
         # Capitalize the name
         baby_name_new = request.form.get("baby_name_new").capitalize()
-
-        # Select that child from db
-        rows = db.execute("SELECT * FROM children WHERE parent_id = ? AND baby_name = ?", session["user_id"], request.form.get("baby_name"))
         
         # Edit the child's data
         db.execute("UPDATE children SET baby_name = ?, baby_birth =  ? WHERE parent_id = ? AND baby_name = ?",
@@ -146,10 +143,10 @@ def child_edit():
 
         return redirect("/children")
     else:
-        # Get children from database
-        children = db.execute("SELECT * FROM children WHERE parent_id = ?", session["user_id"])
-
-        return render_template("child_edit.html", children=children)
+        # Select that child from db
+        child = db.execute("SELECT * FROM children WHERE parent_id = ? AND baby_name = ?", session["user_id"], request.form.get("baby_name"))
+        
+        return render_template("child_edit.html", child=child)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
