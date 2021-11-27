@@ -7,24 +7,30 @@
 {% block main %}
     <h2>Edit your child's information</h2>
     <form action="/child_edit" method="post">
-        {% for data in child %}
         <div class="form-group"></div>
             <select name="baby_name" id="baby_name">
-                <option value="baby_name">{{data["baby_name"]}}</option>
+                {% for child in children %}
+                <option value="baby_name" onkeyup="getName()">{{child["baby_name"]}}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="baby_name_new" value="{{data["baby_name"]}}" type="text">
+            <input autocomplete="off" autofocus class="form-control" placeholder = "Child's name" name="baby_name_new" type="text">
         </div>
         <div class="form-group">
             <label>
-                Enter your child's date of birth:
-                <input type="date" name="baby_birth" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]" value="{{data["baby_birth"]}}">
+                Enter your child's date of birth if you want to change it:
+                <input type="date" name="baby_birth" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]">
             </label>
         </div>
-        {% endfor %}
         <button class="btn btn-primary" type="submit">Submit changes</button>
     </form>
 
+    <script>
+        function getName() {
+          var x = document.getElementById("baby_name").value;
+          document.getElementById("baby_name_new").value = x;
+        }
+        </script>
 
 {% endblock %}
