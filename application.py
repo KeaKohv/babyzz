@@ -126,14 +126,13 @@ def child_edit():
             baby_name_new = request.form.get("baby_name_new").capitalize()
 
             # Check if date was given
-            if request.form.get("baby_birth") and request.form.get("baby_birth") != child["baby_birth"]:
-                # Edit the child's data
-                db.execute("UPDATE children SET baby_name = ?, baby_birth = ? WHERE parent_id = ? AND baby_name = ?",
-                            baby_name_new, request.form.get("baby_birth"), session["user_id"], request.form.get("baby_name"))
-            else:
+            if not request.form.get("baby_birth"):
                 db.execute("UPDATE children SET baby_name = ? WHERE parent_id = ? AND baby_name = ?",
                             baby_name_new, session["user_id"], request.form.get("baby_name"))
-        
+            else:
+                db.execute("UPDATE children SET baby_name = ?, baby_birth = ? WHERE parent_id = ? AND baby_name = ?",
+                            baby_name_new, request.form.get("baby_birth"), session["user_id"], request.form.get("baby_name"))
+              
         flash("Your child's data was changed")
 
         return redirect("/children")
