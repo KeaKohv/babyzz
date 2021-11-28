@@ -28,7 +28,7 @@
     <h2>Add a child</h2>
     <form action="/children" method="post">
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="baby_name" placeholder="Baby's first name" type="text" required pattern = "/^[a-z ,.'-]+$/i" minlength="2" title="Child's name can only contain letters, spaces and has to have at least 2 characters">
+            <input autocomplete="off" autofocus class="form-control" name="baby_name" placeholder="Baby's first name" type="text" required pattern="/^[a-z ,.'-]+$/i" minlength="2" title="Child's name can only contain letters, spaces and has to have at least 2 characters">
         </div>
         <div class="form-group">
             <label>
