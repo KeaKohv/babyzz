@@ -7,42 +7,43 @@
 {% block main %}
     <h3>Suggestions based on averages</h3>
     <p></p>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Child's name</th>
-                <th>Child's age</th>
-                <th>Waketime Length</th>
-                <th>Total Sleep Per 24 hours</th>
-                <th>Total Night Sleep</th>
-                <th>Total Daily Sleep</th>
-                <th>Number of Naps</th>
-                <th>Advice on Naps</th>
-                <th>Ideal bedtime</th>
-                <th>Longest stretch of night sleep</th>
-                <th>Number of night feeds</th>
-            </tr>
-        </thead>
-        <tbody>
-        <!-- Loop through the database entries to display them in this table -->
-            {% for child in children %}
-            <tr>
-                <td data-title="Child's name">{{child["baby_name"]}}</td>
-                <td data-title="Child's age">{{child["baby_age"]}}</td>
-                <td data-title="Waketime Length">{{child["waketime"]}}</td>
-                <td data-title="Total Sleep Per 24 hours">{{child["total_sleep"]}}</td>
-                <td data-title="Total Night Sleep">{{child["total_night"]}}</td>
-                <td data-title="Total Daily Sleep">{{child["total_day"]}}</td>
-                <td data-title="Number of Naps">{{child["nr_naps"]}}</td>
-                <td data-title="Advice on Naps">{{child["naps_advice"]}}</td>
-                <td data-title="Ideal bedtime">{{child["bedtime"]}}</td>
-                <td data-title="Longest stretch of night sleep">{{child["night_sleep_pattern"]}}</td>
-                <td data-title="Number of night feeds">{{child["night_feeds"]}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Child's name</th>
+                    <th>Child's age</th>
+                    <th>Waketime Length</th>
+                    <th>Total Sleep Per 24 hours</th>
+                    <th>Total Night Sleep</th>
+                    <th>Total Daily Sleep</th>
+                    <th>Number of Naps</th>
+                    <th>Advice on Naps</th>
+                    <th>Ideal bedtime</th>
+                    <th>Longest stretch of night sleep</th>
+                    <th>Number of night feeds</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- Loop through the database entries to display them in this table -->
+                {% for child in children %}
+                <tr>
+                    <td data-title="Child's name">{{child["baby_name"]}}</td>
+                    <td data-title="Child's age">{{child["baby_age"]}}</td>
+                    <td data-title="Waketime Length">{{child["waketime"]}}</td>
+                    <td data-title="Total Sleep Per 24 hours">{{child["total_sleep"]}}</td>
+                    <td data-title="Total Night Sleep">{{child["total_night"]}}</td>
+                    <td data-title="Total Daily Sleep">{{child["total_day"]}}</td>
+                    <td data-title="Number of Naps">{{child["nr_naps"]}}</td>
+                    <td data-title="Advice on Naps">{{child["naps_advice"]}}</td>
+                    <td data-title="Ideal bedtime">{{child["bedtime"]}}</td>
+                    <td data-title="Longest stretch of night sleep">{{child["night_sleep_pattern"]}}</td>
+                    <td data-title="Number of night feeds">{{child["night_feeds"]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <p>The table displays data on children up to 4 years of age.</p>
     <p>Source of sleep advice: <a href="http://www.mybabysleepguide.com/2013/02/average-sleep-charts-by-age.html" target="_blank" rel="noreferrer noopener">Rachel Rowell.</a></p>
