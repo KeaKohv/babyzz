@@ -287,8 +287,17 @@ def register():
                    request.form.get("username"),  generate_password_hash(request.form.get("password")),
                    request.form.get("first_name"))
 
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+
+        # Remember which user has logged in
+        session["user_id"] = rows[0]["id"]
+        # Remember username
+        session["first_name"] = rows[0]["first_name"]
+
+        # Redirect user to home page
         flash('You were successfully registered')
-        return render_template("login.html")
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
