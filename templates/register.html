@@ -6,17 +6,19 @@
 
 {% block main %}
     <form action="/register" method="post">
+        <img class="mb-4" src="/static/pixlr-bg-result.png"  alt="" width="48" height="48">
+        <h1 class="h3 mb-3 font-weight-normal">Fill in the form below to register</h1>
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="first_name" placeholder="First name" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="first_name" placeholder="First name" type="text" required>
         </div>
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" required>
         </div>
         <div class="form-group">
-            <input class="form-control" name="password" placeholder="Password" type="password">
+            <input class="form-control" name="password" placeholder="Password" type="password" required>
         </div>
                 <div class="form-group">
-            <input class="form-control" name="confirmation" placeholder="Confirm password" type="password">
+            <input class="form-control" name="confirmation" placeholder="Confirm password" type="password" required>
         </div>
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
