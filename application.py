@@ -73,10 +73,6 @@ def children():
         if not request.form.get("baby_name"):
             return apology("must provide child's name", 403)
 
-        # Check if name contains only strings
-        if not all(x.isalpha() or x.isspace() for x in request.form.get("baby_name")):
-            return apology("Child's name can only contain letters", 403)
-
         # Check if date was given
         if not request.form.get("baby_birth"):
             return apology("must provide child's date of birth", 403)
