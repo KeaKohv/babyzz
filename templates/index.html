@@ -9,28 +9,30 @@
     <p></p>
     <h3>Your children's sleep needs </h3>
     <p></p>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Child's name</th>
-                <th>Child's age</th>
-                <th>Total sleep need in 24h</th>
-                <th>Nap pattern</th>
-            </tr>
-        </thead>
-        <tbody>
-        <!-- Loop through the database entries to display them in this table -->
-            {% for child in children %}
-            <tr>
-                <td data-title="Child's name">{{child["baby_name"]}}</td>
-                <td data-title="Child's age">{{child["baby_age"]}}</td>
-                <td data-title="Total sleep need in 24h">{{child["total"]}}</td>
-                <td data-title="Nap pattern">{{child["naps"]}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Child's name</th>
+                    <th>Child's age</th>
+                    <th>Total sleep need in 24h</th>
+                    <th>Nap pattern</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- Loop through the database entries to display them in this table -->
+                {% for child in children %}
+                <tr>
+                    <td data-title="Child's name">{{child["baby_name"]}}</td>
+                    <td data-title="Child's age">{{child["baby_age"]}}</td>
+                    <td data-title="Total sleep need in 24h">{{child["total"]}}</td>
+                    <td data-title="Nap pattern">{{child["naps"]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
     <p>You can add children <a href="/children">here</a>.</p>
     <p>The table displays data on children under 14 years of age.</p>
     <p>Source of sleep advice based on available scientific studies: <a href="https://www.nytimes.com/2020/03/24/parenting/child-stop-napping.html" target="_blank" rel="noreferrer noopener">Dr Craig Canapari</a></p>
