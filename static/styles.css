@@ -4,24 +4,6 @@ nav .navbar-brand
     font-size: xx-large;
 }
 
-/* Colors for brand */
-nav .navbar-brand .blue
-{
-    color: #537fbe;
-}
-nav .navbar-brand .red
-{
-    color: #ea433b;
-}
-nav .navbar-brand .yellow
-{
-    color: #f5b82e;
-}
-nav .navbar-brand .green
-{
-    color: #2e944b;
-}
-
 main .form-control
 {
     /* Center form controls */
@@ -44,4 +26,54 @@ main img
 {
     /* Constrain images on small screens */
     max-width: 100%;
+}
+
+body
+{
+  background:#e6e6ff;
+  font-family: 'Encode Sans', sans-serif;
+}
+/* navigation bar */
+#babyzz
+{
+  border-radius:0px;
+  background:#fff;
+  padding:10px;
+  font-size:17px;
+}
+/* logo or main heading */
+#logo
+{
+  font-size:20px;
+  font-weight:bolder;
+  color:#00004d;
+  letter-spacing:2px;
+}
+/* navigation links*/
+#link a
+{
+  color:#01325d;
+  margin:0 20px 0 10px;
+  letter-spacing:1.5px;
+}
+/* navigation link with right border */
+#first-link
+{
+  padding-right:6px;
+  border-right:solid 1px #ccc;
+}
+/* sign up link button and toggle button */
+#button-link ,#toogle-button
+{
+  color:#f2f2f2;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0,0,0,.2);
+  border-radius: 2px;
+  background-color: #fa6a48;
+  line-height: 17px;
+}
+#button-link a
+{
+  color:#f2f2f2;
 }
