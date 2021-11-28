@@ -122,17 +122,13 @@ def child_edit():
             return apology("must provide child's name", 403)
 
         if request.form.get("baby_name_new") != request.form.get("baby_name"):
-            # Check if name contains only strings
-            if not all(x.isalpha() or x.isspace() for x in request.form.get("baby_birth")):
-                return apology("Child's name can only contain letters", 403)
-
             # Capitalize the name
             baby_name_new = request.form.get("baby_name_new").capitalize()
 
             # Check if date was given
             if request.form.get("baby_birth") and request.form.get("baby_birth") != child["baby_birth"]:
                 # Edit the child's data
-                db.execute("UPDATE children SET baby_name = ?, baby_birth =  ? WHERE parent_id = ? AND baby_name = ?",
+                db.execute("UPDATE children SET baby_name = ?, baby_birth = ? WHERE parent_id = ? AND baby_name = ?",
                             baby_name_new, request.form.get("baby_birth"), session["user_id"], request.form.get("baby_name"))
             else:
                 db.execute("UPDATE children SET baby_name = ? WHERE parent_id = ? AND baby_name = ?",
