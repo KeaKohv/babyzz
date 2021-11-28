@@ -117,6 +117,9 @@ def child_edit():
         if len(child) != 1:
             return apology("no such child in database", 403)
 
+        for i in child:
+            id = i["id"]
+
         # Check if name was given
         if not request.form.get("baby_name_new"):
             return apology("must provide child's name", 403)
@@ -124,14 +127,11 @@ def child_edit():
         if request.form.get("baby_name_new") != request.form.get("baby_name"):
             # Capitalize the name
             baby_name_new = request.form.get("baby_name_new").capitalize()
+            db.execute("UPDATE children SET baby_name = ? WHERE id = ?", baby_name_new, id)
 
-            # Check if date was given
-            if not request.form.get("baby_birth"):
-                db.execute("UPDATE children SET baby_name = ? WHERE parent_id = ? AND baby_name = ?",
-                            baby_name_new, session["user_id"], request.form.get("baby_name"))
-            else:
-                db.execute("UPDATE children SET baby_name = ?, baby_birth = ? WHERE parent_id = ? AND baby_name = ?",
-                            baby_name_new, request.form.get("baby_birth"), session["user_id"], request.form.get("baby_name"))
+        # Check if date was given
+        if request.form.get("baby_birth"):
+            db.execute("UPDATE children SET baby_birth = ? WHERE id = ?", request.form.get("baby_birth"), id)
               
         flash("Your child's data was changed")
 
