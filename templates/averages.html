@@ -7,6 +7,30 @@
 {% block main %}
     <h3>Suggestions based on averages</h3>
     <p></p>
+
+    {% for child in children %}
+        <div class="container">
+            <div class="row">
+            <div class="col-sm">
+                Child's name
+            </div>
+            <div class="col-sm">
+                {{child["baby_name"]}}
+            </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+            <div class="col-sm">
+                Child's age
+            </div>
+            <div class="col-sm">
+                {{child["baby_age"]}}
+            </div>
+            </div>
+        </div>
+      {% endfor %}
+
     <table class="table table-striped">
         <thead>
             <tr>
