@@ -27,17 +27,17 @@
         <!-- Loop through the database entries to display them in this table -->
             {% for child in children %}
             <tr>
-                <td>{{child["baby_name"]}}</td>
-                <td>{{child["baby_age"]}}</td>
-                <td>{{child["waketime"]}}</td>
-                <td>{{child["total_sleep"]}}</td>
-                <td>{{child["total_night"]}}</td>
-                <td>{{child["total_day"]}}</td>
-                <td>{{child["nr_naps"]}}</td>
-                <td>{{child["naps_advice"]}}</td>
-                <td>{{child["bedtime"]}}</td>
-                <td>{{child["night_sleep_pattern"]}}</td>
-                <td>{{child["night_feeds"]}}</td>
+                <td data-title="Child's name">{{child["baby_name"]}}</td>
+                <td data-title="Child's age">{{child["baby_age"]}}</td>
+                <td data-title="Waketime Length">{{child["waketime"]}}</td>
+                <td data-title="Total Sleep Per 24 hours">{{child["total_sleep"]}}</td>
+                <td data-title="Total Night Sleep">{{child["total_night"]}}</td>
+                <td data-title="Total Daily Sleep">{{child["total_day"]}}</td>
+                <td data-title="Number of Naps">{{child["nr_naps"]}}</td>
+                <td data-title="Advice on Naps">{{child["naps_advice"]}}</td>
+                <td data-title="Ideal bedtime">{{child["bedtime"]}}</td>
+                <td data-title="Longest stretch of night sleep">{{child["night_sleep_pattern"]}}</td>
+                <td data-title="Number of night feeds">{{child["night_feeds"]}}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -20,10 +20,10 @@
         <!-- Loop through the database entries to display them in this table -->
             {% for child in children %}
             <tr>
-                <td>{{child["baby_name"]}}</td>
-                <td>{{child["baby_age"]}}</td>
-                <td>{{child["waketime"]}}</td>
-                <td>{{child["schedule"]}}</td>
+                <td data-title="Child's name">{{child["baby_name"]}}</td>
+                <td data-title="Child's age">{{child["baby_age"]}}</td>
+                <td data-title="Waketime Length">{{child["waketime"]}}</td>
+                <td data-title="Waketime Schedule">{{child["schedule"]}}</td>
             </tr>
             {% endfor %}
         </tbody>
