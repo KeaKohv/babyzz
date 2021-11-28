@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<body class="text-center">
-    <form action="/login" method="post" class="form-signin">
+    <form action="/login" method="post">
         <img class="mb-4" src="/static/pixlr-bg-result.png"  alt="" width="48" height="48">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <div class="form-group">
@@ -17,5 +16,4 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
     </form>
-</body>
 {% endblock %}
